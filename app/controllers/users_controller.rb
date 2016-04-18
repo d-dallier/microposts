@@ -17,11 +17,19 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-
+  
+  #課題用ユーザ情報変更
+  def edit
+  end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :place)
   end
+
+  #課題用ユーザ情報更新処理
+  def update
+  end
+
 end
