@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [:edit, :update]
   
   def show
     @user = User.find(params[:id])
@@ -22,14 +23,27 @@ class UsersController < ApplicationController
   def edit
   end
 
+  #課題用ユーザ情報更新処理
+  def update
+    if @user.update(user_params)
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+  
+  
+
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :place)
+    params.require(:user).permit(:name, :email, 
+                                :password, :password_confirmation, 
+                                :place, :profile, :publish_email)
   end
 
-  #課題用ユーザ情報更新処理
-  def update
+  def set_user
+    @user = User.find(params[:id])
   end
 
 end
