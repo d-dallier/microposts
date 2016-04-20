@@ -18,7 +18,18 @@ class UsersController < ApplicationController
       render 'new'
     end
   end
-
+  
+  #フォロー一覧
+  def followings
+    @user = User.find(params[:id])
+    @followings = @user.following_relationships
+  end
+  
+  #フォロワー一覧
+  def followers
+    @user = User.find(params[:id])
+    @followers = @user.follower_relationships
+  end
 
   private
 

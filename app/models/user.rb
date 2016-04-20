@@ -25,9 +25,9 @@ class User < ActiveRecord::Base
         following_relationships.find_or_create_by(followed_id: other_user.id)
     end
     
-    #フォローしているユーザーをアンフォローする
+    # フォローしているユーザーをアンフォローする
     def unfollow(other_user)
-        following_relationship = following_relationships.find_by(followed_id:other_user.id)
+        following_relationship = following_relationships.find_by(followed_id: other_user.id)
         following_relationship.destroy if following_relationship
     end
     

@@ -150,7 +150,7 @@ aside {
 
 /** microposts **/
 
-.microposts {
+.microposts{
   list-style: none;
   padding: 0;
   li {
@@ -192,5 +192,31 @@ span.picture {
   margin-top: 10px;
   input {
     border: 0;
+  }
+}
+
+/** followings followers **/
+
+.followers, .followings{
+  list-style: none;
+  padding: 0;
+  div {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .follow{
+    color: $gray-light;
+    display: block;
+    margin-left: 60px;
+    margin-top: 1em;
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
   }
 }
