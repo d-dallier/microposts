@@ -12,4 +12,18 @@ class ApplicationController < ActionController::Base
       redirect_to login_url
     end
   end
+  
+  def correct_user
+    unless logged_in?
+      store_location
+      flash[:danger] = "Please log in."
+      redirect_to login_url
+    end
+    if params[:id].to_i != current_user.id then
+      flash[:danger] = "ID error."
+      redirect_to root_path
+      #p params[:id].to_i
+      #p current_user.id
+    end
+  end
 end

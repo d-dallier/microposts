@@ -9,6 +9,6 @@ class User < ActiveRecord::Base
     
     validates :profile, length: {maximum: 255}
     validates :publish_email, length: {maximum: 255},
-                      format: {with: VALID_EMAIL_REGEX}
+                      format: {allow_brank: true, with: VALID_EMAIL_REGEX}
     validates :place, length: {maximum: 10}
 end

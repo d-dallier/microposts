@@ -1,5 +1,5 @@
 class AddPublishEmailToUsers < ActiveRecord::Migration
   def change
-    add_column :users, :publish_email, :text
+    add_column :users, :publish_email, :string
   end
 end
