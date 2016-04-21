@@ -1,11 +1,29 @@
 <li id = "micropost-<%= micropost.id %>">
     <%= link_to gravatar_for(micropost.user, size:50), micropost.user %>
     <span class = "user"><%= link_to micropost.user.name, micropost.user %></span>
-    <span class = "content"><%= micropost.content %></span>
+    <% if micropost.content == "RP" && micropost.RT_post != "nil" %>
+        <span class = "content"><%= Micropost.find(micropost.RT_post).content %></span>
+    <% else %>
+        <span class = "content"><%= micropost.content %></span>
+    <% end %>
     <span class = "timestamp">
-        Posted <%= time_ago_in_words(micropost.created_at) %> ago.
-        <% if current_user == micropost.user %>
-            <%= link_to "delete", micropost, method: :delete, data: {confirm: "You sure?"} %>
+        <% if micropost.content == "RP" && micropost.RT_post != "nil" %>
+            <% p "!!!!!!!" %>
+            <% p micropost.user.name %>
+            Reosted <%= time_ago_in_words(micropost.created_at) %> ago from <%= Micropost.find(micropost.RT_post).user.name %>.
+        <% else %>
+            Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+        <% end %>
+        <%if !micropost.reposting?(micropost.id, current_user) %>
+            <% if current_user == micropost.user %>
+                <%= link_to "delete", micropost, method: :delete, data: {confirm: "You sure?"} %>
+            <% else %>
+                <%= link_to "Repost", repost_micropost_path(micropost)  %>
+            <% end %>
+        <% else %>
+            Reposted
         <% end %>    
     </span>
 </li>
+
+

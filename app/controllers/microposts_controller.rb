@@ -1,10 +1,10 @@
 class MicropostsController < ApplicationController
-    before_action :logged_in_user, only: [:create, :destroys]
+    before_action :logged_in_user, only: [:create, :destroys, :repost]
     
     def create
         @micropost = current_user.microposts.build(micropost_params)
         if @micropost.save
-            flash[:success] = "Micopost created!"
+            flash[:success] = "Micropost created!"
             redirect_to root_url
         else
             @feed_items = current_user.feed_items.includes(:user).order(created_at: :desc)
@@ -18,6 +18,20 @@ class MicropostsController < ApplicationController
         @micropost.destroy
         flash[:success] = "Micropost deleted"
         redirect_to request.referrer || root_url
+    end
+    
+    #リツイート的な
+    def repost
+        @micropost = Micropost.find(params[:id])
+        #Repostを押されたpostのユーザとRepostしたいユーザ(LoginUser)が異なる
+        if @micropost.user_id != current_user.id
+            #micropostsにデータを追加する
+            @micropost.do_repost(@micropost.id, current_user)
+            flash[:success] = "Repost!"
+            redirect_to request.referrer || root_url
+        else
+            redirect_to root_url
+        end
     end
     
     private
